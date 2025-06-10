@@ -84,6 +84,8 @@ setup_pattern_binding "P" "--pattern-name pointer-address"
 setup_pattern_binding "q" "-x quoted-single -x quoted-double -x quoted-backtick"
 # prefix + t + s searches for nix shas
 setup_pattern_binding "s" "--pattern-name nix-shas"
+# prefix + t + l searches for "nix log .drv"
+setup_pattern_binding "l" "--pattern-name nix-log"
 # prefix + t + u searches for URLs
 setup_pattern_binding "u" "--pattern-name url"
 # prefix + t + U searches for UUIDs

@@ -82,6 +82,8 @@ setup_pattern_binding "p" "--pattern-name path"
 setup_pattern_binding "P" "--pattern-name pointer-address"
 # prefix + t + q searches for strings inside single|double|backticks
 setup_pattern_binding "q" "-x quoted-single -x quoted-double -x quoted-backtick"
+# prefix + t + s searches for nix shas
+setup_pattern_binding "s" "--pattern-name nix-shas"
 # prefix + t + u searches for URLs
 setup_pattern_binding "u" "--pattern-name url"
 # prefix + t + U searches for UUIDs

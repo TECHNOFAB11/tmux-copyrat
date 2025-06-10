@@ -11,7 +11,7 @@ pub(super) const EXCLUDE_PATTERNS: [(&str, &str); 1] =
 ///
 /// The email address was obtained at https://www.regular-expressions.info/email.html.
 /// Some others were obtained from Ferran Basora, the rest is by me.
-pub(super) const PATTERNS: [(&str, &str); 21] = [
+pub(super) const PATTERNS: [(&str, &str); 22] = [
     ("markdown-url", r"\[[^]]*\]\(([^)]+)\)"),
     (
         "url",
@@ -48,6 +48,7 @@ pub(super) const PATTERNS: [(&str, &str); 21] = [
         "command-line-args",
         r#"(?:--[a-z][0-9a-z\-_]+|-[a-z])(?: |=)([^-\s\n]\S+)"#,
     ),
+    ("nix-shas", r#"((sha256|sha512)-[a-zA-Z0-9+/=]{44})"#),
 ];
 
 /// Type-safe string Pattern Name (newtype).

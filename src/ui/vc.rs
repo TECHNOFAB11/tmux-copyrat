@@ -941,7 +941,7 @@ Barcelona https://en.wikipedia.org/wiki/Barcelona -   ";
             wrapped_lines,
             focus_index: 0,
             focus_wrap_around: false,
-            default_output_destination: OutputDestination::Tmux,
+            default_output_destination: OutputDestination::Clipboard,
             rendering_colors: &rendering_colors,
             hint_alignment: &hint_alignment,
             hint_style: None,
@@ -994,7 +994,7 @@ Barcelona https://en.wikipedia.org/wiki/Barcelona -   ";
             unique_hint,
         );
         let wrap_around = false;
-        let default_output_destination = OutputDestination::Tmux;
+        let default_output_destination = OutputDestination::Clipboard;
 
         let rendering_colors = UiColors {
             text_fg: colors::BLACK,

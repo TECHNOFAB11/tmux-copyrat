@@ -203,7 +203,7 @@ pub fn run(lines: &[&str], opt: &config::basic::Config) -> Option<ui::Selection>
         return None;
     }
 
-    let default_output_destination = config::extended::OutputDestination::Tmux;
+    let default_output_destination = config::extended::OutputDestination::Clipboard;
 
     let selection: Option<ui::Selection> = {
         let mut ui = ui::ViewController::new(

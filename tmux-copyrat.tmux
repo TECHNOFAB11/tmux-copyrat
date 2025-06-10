@@ -1,37 +1,6 @@
 #!/usr/bin/env bash
 
-# This scripts provides a default configuration for tmux-copyrat options and
-# key bindings. It is run only once at tmux launch.
-#
-# Each option and binding can be overridden in your `tmux.conf` by defining
-# options like
-#
-#   set -g @copyrat-keytable "foobar"
-#   set -g @copyrat-keyswitch "z"
-#   set -g @copyrat-span-bg "magenta"
-#
-# and bindings like
-#
-#   bind-key -T foobar h new-window -d -n "[copyrat]" '/path/to/tmux-copyrat --window-name "[copyrat]" --pattern-name urls'
-#                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#
-# Please avoid modifying this script as it may break the integration with
-# `tmux-copyrat`.
-#
-#
-# Just make sure you first open a named window in the background and provide
-# that name to the binary `tmux-copyrat`.
-#
-# Don't even try to run tmux-copyrat with run-shell, this cannot work because
-# Tmux launches these processes without attaching them to a pty.
-
-# You can also entirely ignore this file (not even source it) and define all
-# options and bindings in your `tmux.conf`.
-
-BINARY=$(which tmux-copyrat)
-# CURRENT_DIR="$( cd "$( dirname "$0" )" && pwd )"
-# BINARY=${CURRENT_DIR}/tmux-copyrat
-
+DEFAULT_BINARY=$(which tmux-copyrat)
 
 #
 # Top-level options
@@ -45,6 +14,8 @@ setup_option () {
     tmux set-option -g @copyrat-${opt_name} ${value}
 }
 
+# Allows manual configuration of path to tmux-copyrat binary
+setup_option "binary" "$DEFAULT_BINARY"
 
 # Sets the window name which copyrat should use when running, providing a
 # default value in case @copyrat-window-name was not defined.
@@ -81,13 +52,12 @@ else
   fi
 fi
 clipboard_exe=$(tmux show-option -gv @copyrat-clipboard-exe)
+binary=$(tmux show-option -gv @copyrat-binary)
 
 setup_pattern_binding () {
     key=$1
     pattern_arg="$2"
-    # The default window name `[copyrat]` has to be single quoted because it is
-    # interpreted by the shell when launched by tmux.
-    tmux bind-key -T ${keytable} ${key} new-window -d -n ${window_name} "${BINARY} run --window-name '"${window_name}"' --clipboard-exe ${clipboard_exe} --reverse --unique-hint ${pattern_arg}"
+    tmux bind-key -T ${keytable} ${key} new-window -d -n "${window_name}" "${binary} run --window-name \"${window_name}\" --clipboard-exe \"${clipboard_exe}\" --reverse --unique-hint ${pattern_arg}"
 }
 
 # prefix + t + a searches for command-line arguments
@@ -126,4 +96,4 @@ setup_pattern_binding "6" "--pattern-name ipv6"
 setup_pattern_binding "space" "--all-patterns"
 
 # prefix + t + / prompts for a pattern and search for it
-tmux bind-key -T ${keytable} "/" command-prompt -p "search:" "new-window -d -n '${window_name}' \"${BINARY}\" run --window-name '${window_name}' --reverse --unique-hint --custom-pattern %%"
+tmux bind-key -T ${keytable} "/" command-prompt -p "search:" "new-window -d -n '${window_name}' \"${binary} run --window-name \\\"${window_name}\\\" --reverse --unique-hint --clipboard-exe \\\"${clipboard_exe}\\\" --custom-patterns \\\"%%\\\"\""
